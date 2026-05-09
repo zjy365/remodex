@@ -17,7 +17,9 @@ struct SettingsView: View {
                 SettingsAppearanceCard(appFontStyle: appFontStyleBinding)
                 SettingsNotificationsCard()
                 SettingsGPTAccountCard()
-                SettingsSubscriptionCard()
+                if !AppEnvironment.isSelfHostedDirectInstall {
+                    SettingsSubscriptionCard()
+                }
                 SettingsBridgeVersionCard()
                 SettingsRuntimeDefaultsCard()
                 SettingsAboutCard()

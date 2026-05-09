@@ -1,5 +1,5 @@
 // FILE: CodexMobileApp.swift
-// Purpose: App entry point, RevenueCat setup, and root dependency wiring.
+// Purpose: App entry point and root dependency wiring.
 // Layer: App
 // Exports: CodexMobileApp
 
@@ -17,7 +17,9 @@ struct CodexMobileApp: App {
     @State private var subscriptionService: SubscriptionService
 
     init() {
-        Self.configureRevenueCatIfAvailable()
+        if !AppEnvironment.isSelfHostedDirectInstall {
+            Self.configureRevenueCatIfAvailable()
+        }
         let service = CodexService()
         service.configureNotifications()
         _codexService = State(initialValue: service)
@@ -60,6 +62,10 @@ struct CodexMobileApp: App {
 
     // Configures RevenueCat once at launch using the client-safe public SDK key.
     private static func configureRevenueCatIfAvailable() {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            return
+        }
+
         guard let apiKey = AppEnvironment.revenueCatPublicAPIKey else {
             assertionFailure("Missing RevenueCat public API key in Info.plist")
             return

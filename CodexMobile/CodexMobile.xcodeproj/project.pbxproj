@@ -38,7 +38,6 @@
 		B3C4D5E6F708192A3B4C5D6E /* CodexPlanModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C4D5E6F708192A3B4C5D6F /* CodexPlanModeTests.swift */; };
 		B7A1C2D3E4F5061728394051 /* SidebarThreadGroupingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A1C2D3E4F5061728394052 /* SidebarThreadGroupingTests.swift */; };
 		C04E214B2F71D34100AA3193 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = C04E214A2F71D34100AA3193 /* RevenueCat */; };
-		C04E214D2F71D4DB00AA3193 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C04E214C2F71D4DB00AA3193 /* StoreKit.framework */; };
 		C0DED3362F5E39DC0021A8E8 /* Textual in Frameworks */ = {isa = PBXBuildFile; productRef = C0DED3352F5E39DC0021A8E8 /* Textual */; };
 		C0F0D1FF2F7210A700A17B41 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = C0F0D1FE2F7210A700A17B41 /* MarkdownView */; };
 		D0C0FFEE0000000000000001 /* TextualMarkdownRenderingRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C0FFEE0000000000000002 /* TextualMarkdownRenderingRegressionTests.swift */; };
@@ -98,7 +97,6 @@
 		B0C1D2E3F40516273849A5B6 /* TurnSlashCommandTokenTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TurnSlashCommandTokenTests.swift; sourceTree = "<group>"; };
 		B3C4D5E6F708192A3B4C5D6F /* CodexPlanModeTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CodexPlanModeTests.swift; sourceTree = "<group>"; };
 		B7A1C2D3E4F5061728394052 /* SidebarThreadGroupingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SidebarThreadGroupingTests.swift; sourceTree = "<group>"; };
-		C04E214C2F71D4DB00AA3193 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C09A76AE2F4B8D7B003B3F3A /* CodexMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodexMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B9CCCCC45E47616AB452FA /* RemodexMenuBarApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemodexMenuBarApp.swift; sourceTree = "<group>"; };
 		C1D2E3F40516273849A5B6C7 /* CodexServiceIncomingCommandExecutionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CodexServiceIncomingCommandExecutionTests.swift; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C04E214D2F71D4DB00AA3193 /* StoreKit.framework in Frameworks */,
 				C04E214B2F71D34100AA3193 /* RevenueCat in Frameworks */,
 				C0DED3362F5E39DC0021A8E8 /* Textual in Frameworks */,
 				C0F0D1FF2F7210A700A17B41 /* MarkdownView in Frameworks */,
@@ -205,7 +202,6 @@
 		B593FCA030A810D9E56EC959 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C04E214C2F71D4DB00AA3193 /* StoreKit.framework */,
 				C1F310AC95AC9514C6883203 /* iOS */,
 				F132BC0A90D092E32B9D22C1 /* OS X */,
 			);
@@ -721,7 +717,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B1A9C7D5E4F60718293A4B5 /* BuildSupport/Base.xcconfig */;
 			buildSettings = {
-				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = Remodex;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -729,14 +724,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 113;
-				DEVELOPMENT_TEAM = HR24WHR326;
+				DEVELOPMENT_TEAM = 47TANWQFHM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "BuildSupport/CodexMobile-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Remodex;
+				INFOPLIST_KEY_CFBundleDisplayName = "Codeck Remote";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "CodexMobile needs local network access to connect to your Codex app-server running on your Mac.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "CodexMobile needs photo library access to let you attach images to your messages.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Codeck Remote needs local network access to connect to your Codex app-server running on your Mac.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Codeck Remote needs photo library access to let you attach images to your messages.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -748,7 +743,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.emanueledipietro.Remodex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jingyang.codeck.remote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -768,7 +763,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B1A9C7D5E4F60718293A4B5 /* BuildSupport/Base.xcconfig */;
 			buildSettings = {
-				APS_ENVIRONMENT = production;
 				ASSETCATALOG_COMPILER_APPICON_NAME = Remodex;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -776,14 +770,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 113;
-				DEVELOPMENT_TEAM = HR24WHR326;
+				DEVELOPMENT_TEAM = 47TANWQFHM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "BuildSupport/CodexMobile-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Remodex;
+				INFOPLIST_KEY_CFBundleDisplayName = "Codeck Remote";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "CodexMobile needs local network access to connect to your Codex app-server running on your Mac.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "CodexMobile needs photo library access to let you attach images to your messages.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Codeck Remote needs local network access to connect to your Codex app-server running on your Mac.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Codeck Remote needs photo library access to let you attach images to your messages.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -795,7 +789,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.emanueledipietro.Remodex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jingyang.codeck.remote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

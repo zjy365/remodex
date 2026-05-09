@@ -13,6 +13,9 @@ enum AppEnvironment {
     private static let revenueCatDefaultOfferingIDInfoPlistKey = "REVENUECAT_DEFAULT_OFFERING_ID"
     private static let supportEmailAddress = "emandipietro@gmail.com"
 
+    // Local direct-install fork mode: no hosted relay, no App Store gate, no RevenueCat bootstrap.
+    static let isSelfHostedDirectInstall = true
+
     // Open-source builds should provide an explicit relay instead of silently
     // pointing at a hosted service the user does not control.
     static let defaultRelayURLString = ""

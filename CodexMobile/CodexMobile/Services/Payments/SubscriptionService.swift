@@ -1,5 +1,5 @@
 // FILE: SubscriptionService.swift
-// Purpose: Owns RevenueCat customer state, offerings, purchase/restore flows, and the local free-send gate.
+// Purpose: Owns subscription access state for App Store builds and local direct-install forks.
 // Layer: Service
 // Exports: SubscriptionService, SubscriptionPackageOption
 // Depends on: Foundation, Observation, RevenueCat
@@ -82,7 +82,7 @@ final class SubscriptionService {
     private(set) var customerInfo: CustomerInfo?
     private(set) var currentOffering: Offering?
     private(set) var packageOptions: [SubscriptionPackageOption] = []
-    private(set) var hasProAccess = false
+    private var revenueCatHasProAccess = false
     private(set) var freeSendCount = 0
     private(set) var latestPurchaseDate: Date?
     private(set) var willRenew = false
@@ -106,16 +106,32 @@ final class SubscriptionService {
         max(0, Self.freeSendLimit - freeSendCount)
     }
 
+    var hasProAccess: Bool {
+        AppEnvironment.isSelfHostedDirectInstall || revenueCatHasProAccess
+    }
+
     var hasFreeSendAccess: Bool {
-        freeSendCount < Self.freeSendLimit
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            return true
+        }
+
+        return freeSendCount < Self.freeSendLimit
     }
 
     var hasAppAccess: Bool {
-        hasProAccess || hasFreeSendAccess
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            return true
+        }
+
+        return hasProAccess || hasFreeSendAccess
     }
 
     // Counts a valid send attempt for free users even if the turn later fails.
     func consumeFreeSendAttemptIfNeeded() {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            return
+        }
+
         guard !hasProAccess, freeSendCount < Self.freeSendLimit else {
             return
         }
@@ -126,6 +142,13 @@ final class SubscriptionService {
 
     // Bootstraps subscription state once at launch or from the recovery retry action.
     func bootstrap() async {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            bootstrapState = .ready
+            isLoading = false
+            lastErrorMessage = nil
+            return
+        }
+
         guard !isBootstrapping else {
             return
         }
@@ -159,6 +182,11 @@ final class SubscriptionService {
 
     // Refreshes the current subscription state without re-entering the blocking bootstrap UI.
     func refreshCustomerInfoSilently() async {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            bootstrapState = .ready
+            return
+        }
+
         guard !isBootstrapping, bootstrapState != .loading else {
             return
         }
@@ -179,6 +207,13 @@ final class SubscriptionService {
 
     // Reads the current RevenueCat offerings and normalizes the package list for SwiftUI.
     func loadOfferings() async {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            packageOptions = []
+            currentOffering = nil
+            lastErrorMessage = nil
+            return
+        }
+
         startCustomerInfoObserverIfConfigured()
         isLoading = true
         lastErrorMessage = nil
@@ -190,6 +225,11 @@ final class SubscriptionService {
 
     // Starts a purchase flow for the selected package and refreshes entitlements on success.
     func purchase(_ option: SubscriptionPackageOption) async {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            lastErrorMessage = nil
+            return
+        }
+
         guard !isPurchasing else {
             return
         }
@@ -225,6 +265,12 @@ final class SubscriptionService {
 
     // Restores store purchases and then re-checks the Pro entitlement state.
     func restorePurchases() async {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            bootstrapState = .ready
+            lastErrorMessage = nil
+            return
+        }
+
         guard !isRestoring else {
             return
         }
@@ -252,6 +298,12 @@ final class SubscriptionService {
 
     // Syncs StoreKit purchases that may have happened in Apple's code redemption sheet.
     func syncPurchasesAfterOfferCodeRedemption() async {
+        guard !AppEnvironment.isSelfHostedDirectInstall else {
+            bootstrapState = .ready
+            lastErrorMessage = nil
+            return
+        }
+
         startCustomerInfoObserverIfConfigured()
         guard Purchases.isConfigured else {
             lastErrorMessage = "Subscriptions are unavailable right now."
@@ -320,8 +372,8 @@ private extension SubscriptionService {
     func applyCustomerInfo(_ info: CustomerInfo) {
         customerInfo = info
         let entitlement = info.entitlements.all[AppEnvironment.revenueCatEntitlementName]
-        hasProAccess = entitlement?.isActive == true
-        hasCachedOptimisticAccess = hasProAccess
+        revenueCatHasProAccess = entitlement?.isActive == true
+        hasCachedOptimisticAccess = revenueCatHasProAccess
         latestPurchaseDate = entitlement?.latestPurchaseDate
         willRenew = entitlement?.willRenew == true
         managementURL = info.managementURL
@@ -337,7 +389,7 @@ private extension SubscriptionService {
             return
         }
 
-        hasProAccess = cachedState.hasProAccess
+        revenueCatHasProAccess = cachedState.hasProAccess
         hasCachedOptimisticAccess = cachedState.hasProAccess
         latestPurchaseDate = cachedState.latestPurchaseDate
         willRenew = cachedState.willRenew
@@ -347,7 +399,7 @@ private extension SubscriptionService {
 
     func persistCachedState() {
         let cachedState = CachedSubscriptionState(
-            hasProAccess: hasProAccess,
+            hasProAccess: revenueCatHasProAccess,
             latestPurchaseDate: latestPurchaseDate,
             willRenew: willRenew,
             managementURLString: managementURL?.absoluteString
